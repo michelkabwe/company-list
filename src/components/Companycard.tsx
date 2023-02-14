@@ -4,26 +4,25 @@ import { makeStyles } from '@material-ui/core/styles';
 
 
 
-interface Props {
+interface DataProps {
     item: Data;
     index: number;
     
 }
-
-
-
-
 interface Data {
     symbol: string;
     name: string;
     exchange: string;
-    assetType: string;
-    ipoDate: string;
-    delistingDate: string | null;
-    status: string;
   }
+
+type AddItemBtn = {
+    BtnOnClick:(e: React.MouseEvent<HTMLButtonElement>) => void;
+  }
+
+type CompanycardProps = DataProps & AddItemBtn
   
-const Companycard:React.FC<Props>= ({item , index}) => {
+  
+const Companycard:React.FC<CompanycardProps>= ({item , index, BtnOnClick}) => {
     
     const classes = useStyles();
     const data = item as Data;
@@ -34,7 +33,7 @@ const Companycard:React.FC<Props>= ({item , index}) => {
                 <li className={classes.search_result_wrapper}>
                     <p className={classes.p_info}>{data.symbol}</p>
                     <p className={classes.p_info}>{data.name}</p>
-                    <Button size="large">ADD</Button>
+                    <Button onClick={(e) => BtnOnClick(e)} size="large">ADD</Button>
                 </li>
             </ul> 
         </div>

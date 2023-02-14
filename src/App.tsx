@@ -13,27 +13,19 @@ import CompanyList from './components/CompanyList'
 import CompanyPortfolio from './components/CompanyPortfolio'
 
 
-interface Data {
+type JsonData = {
   symbol: string;
   name: string;
-  exchange: string;
-  assetType: string;
-  ipoDate: string;
-  delistingDate: string | null;
   status: string;
 }
-
-
-const App: React.FC= () =>  {
-  const classes = useStyles();
-  const [jsonData , setJsonData ] = useState<Data[]>([])
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState<Data[]>([]);
  
 
-  const myData = {
-    jsonData: jsonData,
-  };
+const App: React.FC=() =>  {
+  const classes = useStyles();
+  const [jsonData , setJsonData] = useState<JsonData[]>([])
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredData, setFilteredData] = useState<JsonData[]>([]);
+
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -41,12 +33,13 @@ const App: React.FC= () =>  {
         jsonData.filter((item) =>
             item.name.toLowerCase().includes(searchTerm.toLowerCase()) 
         )
-
     );
-
-
 }
-  
+
+  const addItemToList = (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(e.target)
+  }
+
 
 
   useEffect(() => {
@@ -85,7 +78,10 @@ const App: React.FC= () =>  {
                           Search results
                        </Typography> 
                        <Box className={classes.search_results}>
-                       <CompanyList {...myData} filteredData={filteredData}/>
+                       <CompanyList 
+                            jsonData={jsonData} 
+                              filteredData={filteredData}
+                                    handleClick={addItemToList} />
                        </Box>
             
                   </Box>
@@ -133,7 +129,8 @@ const useStyles = makeStyles({
   search_results: {
     height:'100px',
     width:'500px',
-    border:'solid 1px',
+    border:'solid 1px #3f50b5',
+    borderRadius: '4.5px',
     overflow:'auto'
   },
   search_input: {
