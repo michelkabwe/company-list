@@ -22,9 +22,10 @@ type JsonData = {
 
 const App: React.FC=() =>  {
   const classes = useStyles();
-  const [jsonData , setJsonData] = useState<JsonData[]>([])
+  const [jsonData , setJsonData] = useState<JsonData[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState<JsonData[]>([]);
+  const [selectedItem, setSelectedItem] = useState(jsonData);
 
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,9 +37,13 @@ const App: React.FC=() =>  {
     );
 }
 
-  const addItemToList = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(e.target)
-  }
+      const addItemToList = (index: number, e: React.MouseEvent<HTMLButtonElement>) => {
+        const selected = jsonData[index];
+        setSelectedItem([...selectedItem, selected]);
+        console.log(selectedItem)
+        console.log(selected, 'selected')
+
+      };
 
 
 

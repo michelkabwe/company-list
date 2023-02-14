@@ -16,7 +16,8 @@ interface Data {
   }
 
 type AddItemBtn = {
-    BtnOnClick:(e: React.MouseEvent<HTMLButtonElement>) => void;
+    BtnOnClick:(index:number,
+        e: React.MouseEvent<HTMLButtonElement>) => void;
   }
 
 type CompanycardProps = DataProps & AddItemBtn
@@ -30,10 +31,10 @@ const Companycard:React.FC<CompanycardProps>= ({item , index, BtnOnClick}) => {
     return (
         <div>
             <ul>
-                <li className={classes.search_result_wrapper}>
+                <li key={index} className={classes.search_result_wrapper}>
                     <p className={classes.p_info}>{data.symbol}</p>
                     <p className={classes.p_info}>{data.name}</p>
-                    <Button onClick={(e) => BtnOnClick(e)} size="large">ADD</Button>
+                    <Button onClick={(e) => BtnOnClick(index, e)} size="large">ADD</Button>
                 </li>
             </ul> 
         </div>

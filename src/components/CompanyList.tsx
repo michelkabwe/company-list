@@ -14,12 +14,9 @@ import Companycard from './Companycard'
 
 
   type AddItemProps = {
-    handleClick:(event: React.MouseEvent<HTMLButtonElement>) => void;
-
+    handleClick:(index:number,
+      e: React.MouseEvent<HTMLButtonElement>) => void;
   }
-
-
-
 
   type FilteredProps = {
     filteredData:any[]
