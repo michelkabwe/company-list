@@ -1,0 +1,23 @@
+#root {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+body {
+  min-height: 100vh;
+  margin: 0px;
+  padding: 0px;
+  height: 100vh;  
+}
+
+.App {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  color: black;
+  overflow-x: hidden;
+  overflow-x: hidden;
+}
