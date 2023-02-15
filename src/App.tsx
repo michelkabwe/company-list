@@ -18,7 +18,12 @@ type JsonData = {
   name: string;
   status: string;
 }
- 
+
+interface NewItemProps  {
+  items: JsonData
+};
+
+
 
 const App: React.FC=() =>  {
   const classes = useStyles();
@@ -26,6 +31,9 @@ const App: React.FC=() =>  {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState<JsonData[]>([]);
   const [selectedItem, setSelectedItem] = useState(jsonData);
+  const [updatedList, setUpdatedList] = useState({});
+  const [newListItems, setNewListItems] = useState<string[]>([]);
+
 
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,9 +47,19 @@ const App: React.FC=() =>  {
 
       const addItemToList = (index: number, e: React.MouseEvent<HTMLButtonElement>) => {
         const selected = jsonData[index];
+        if (!selected) {
+          console.log(`Item at index ${index} not found in the data`);
+          return;
+        }
         setSelectedItem([...selectedItem, selected]);
-        console.log(selectedItem)
-        console.log(selected, 'selected')
+        setUpdatedList((prevState) => ({ ...prevState, [selected.symbol]: selected })); 
+        setNewListItems([...newListItems, selected.symbol]); // add the new item to the list
+        const arr = { ...updatedList, newListItems };
+        console.log(newListItems,'nnnnnn')
+        console.log(arr,'arrr')
+
+        //for (const newListItem in newList) {
+        //}
 
       };
 
@@ -70,7 +88,7 @@ const App: React.FC=() =>  {
             <Header />
             <Container className={classes.box_container}>
               <Box className={classes.col}>
-                <Box className={classes.search_container}>
+                <Box>
                   <TextField className={classes.search_input}
                   label="Search..."
                   variant="outlined"
@@ -79,9 +97,7 @@ const App: React.FC=() =>  {
                   
                   />
                   <Box className={classes.search_results_wrapper}>
-                      <Typography variant="h6">
-                          Search results
-                       </Typography> 
+                      <Typography variant="h6">Search results </Typography> 
                        <Box className={classes.search_results}>
                        <CompanyList 
                             jsonData={jsonData} 
@@ -93,12 +109,12 @@ const App: React.FC=() =>  {
                 </Box>
               </Box>
               <Box className={classes.col}>
-                <Container className={classes.box_container}>
+                <Box className={classes.search_results_wrapper}>
                   <Typography variant="h6">Your Portfolio</Typography>
-                  <CompanyPortfolio />
-
-                </Container>
-
+                      <Box className={classes.search_container_portfolio}>
+                  <CompanyPortfolio  newListItems={newListItems}/>
+                </Box>
+                </Box>
               </Box>
             </Container> 
           </div>
@@ -129,7 +145,6 @@ const useStyles = makeStyles({
 
   },
 
-  search_container: {},
   search_results_wrapper: {},
   search_results: {
     height:'100px',
@@ -153,5 +168,19 @@ const useStyles = makeStyles({
       },
     },
   },
+  search_container_portfolio: {
+    marginTop:'6rem',
+    justifyContent:'center',
+    alignItems:'center',
+    height:'100px',
+    width:'500px',
+    border:'solid 1px #3f50b5',
+    overflow:'auto',
+    borderRadius: '4.5px',
+
+
+    
+  },
+
 });
 

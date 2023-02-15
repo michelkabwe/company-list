@@ -44,12 +44,7 @@ const Companycard:React.FC<CompanycardProps>= ({item , index, BtnOnClick}) => {
 export default Companycard
 
 const useStyles = makeStyles({
-    header: {
-        width:'100%',
-        height:'2rem',
-        backgroundColor:'grey'
-   
-    },
+ 
 
     search_result_wrapper: {
         display:'flex'
