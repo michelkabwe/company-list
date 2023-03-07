@@ -33,7 +33,6 @@ const Companycard:React.FC<CompanycardProps>= ({item , index, BtnOnClick}) => {
             <ul>
                 <li key={index} className={classes.search_result_wrapper}>
                     <p className={classes.p_info}>{data.symbol}</p>
-                    <p className={classes.p_info}>{data.name}</p>
                     <Button onClick={(e) => BtnOnClick(index, e)} size="large">ADD</Button>
                 </li>
             </ul> 

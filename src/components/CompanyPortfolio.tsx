@@ -24,22 +24,27 @@ interface Props {
 const CompanyPortfolio: React.FC<Props> = ({ newListItems }) => {
   const classes = useStyles()
 
-    const [deleteItem, setDeleteItem] = useState('');
     const [items, setItems] = useState<string[]>(newListItems);
 
-
-
- 
     const handleDelete = (index:number) => {
-      const updatedList = [...items]; // create a new copy of the original array
-      updatedList.splice(index, 1); // remove one element at the specified index
-      console.log(updatedList)
-      console.log(items,'items')
+      const updatedList = [...items
+      ]; // create a new copy of the original array
+      updatedList.splice(index,1); // remove one element at the specified index
+      setItems(updatedList);
+      console.log(updatedList,'ul');
+
+
     }
+
+    
+    useEffect(() => {
+      setItems(newListItems);
+      
+    }, [newListItems]);
     return (
       <div>
           <ul>
-            {newListItems.map((item , index) => ( 
+            {items.map((item , index) => ( 
                <li className={classes.portfolio_wrapper} key={index}>
                <p className={classes.p_info}>{item}</p>
                <p onClick={() => handleDelete(index)} className={classes.delete_btn}>❌</p>
