@@ -1,11 +1,8 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
+import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles';
 
 
-type Props = {
-  newListItems: string[];
-
-}
 
 interface DataProps {
   item: Data;
@@ -20,16 +17,37 @@ interface Data {
 
 type CompanyPortfolio = DataProps & Data
 
+interface Props {
+  newListItems: string[];
+}
 
-  const CompanyPortfolio:React.FC<Props>= ({newListItems}) => {
-    const classes = useStyles()
+const CompanyPortfolio: React.FC<Props> = ({ newListItems }) => {
+  const classes = useStyles()
+
+    const [deleteItem, setDeleteItem] = useState('');
+    const [items, setItems] = useState<string[]>(newListItems);
+
+
+
+ 
+    const handleDelete = (index:number) => {
+      const updatedList = [...items]; // create a new copy of the original array
+      updatedList.splice(index, 1); // remove one element at the specified index
+      console.log(updatedList)
+      console.log(items,'items')
+    }
     return (
       <div>
           <ul>
-              <li className={classes.portfolio_wrapper}>
-                <p className={classes.p_info}>{newListItems}</p>
+            {newListItems.map((item , index) => ( 
+               <li className={classes.portfolio_wrapper} key={index}>
+               <p className={classes.p_info}>{item}</p>
+               <p onClick={() => handleDelete(index)} className={classes.delete_btn}>❌</p>
+               </li>
+            ))}
+             
                   
-            </li>
+        
           </ul>
       </div>
     )
@@ -40,11 +58,20 @@ export default CompanyPortfolio
 const useStyles = makeStyles({
 
   portfolio_wrapper: {
+    display: 'flex',
+    listStyleType:'none'
   },
 
   p_info: {
-    marginRight:'2rem'
+    marginRight:'2rem',
+    paddingRight:'2rem'
+  },
+
+  delete_btn: {
+    cursor:'pointer',
+  
   }
+
 
 
 

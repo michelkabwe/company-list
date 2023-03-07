@@ -45,7 +45,6 @@ export default Companycard
 
 const useStyles = makeStyles({
  
-
     search_result_wrapper: {
         display:'flex'
 

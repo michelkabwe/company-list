@@ -19,9 +19,14 @@ type JsonData = {
   status: string;
 }
 
+/*
 interface NewItemProps  {
   items: JsonData
-};
+ 
+};*/
+
+
+
 
 
 
@@ -34,7 +39,7 @@ const App: React.FC=() =>  {
   const [updatedList, setUpdatedList] = useState({});
   const [newListItems, setNewListItems] = useState<string[]>([]);
 
-
+    console.log(jsonData)
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -52,11 +57,14 @@ const App: React.FC=() =>  {
           return;
         }
         setSelectedItem([...selectedItem, selected]);
-        setUpdatedList((prevState) => ({ ...prevState, [selected.symbol]: selected })); 
+        setUpdatedList((prevState) => ({ ...prevState, updatedList: updatedList })); 
         setNewListItems([...newListItems, selected.symbol]); // add the new item to the list
+        console.log(updatedList,'updatedlist')
         const arr = { ...updatedList, newListItems };
-        console.log(newListItems,'nnnnnn')
-        console.log(arr,'arrr')
+        console.log(newListItems,'NLI')
+
+        console.log(selectedItem,' selectedItem')
+        console.log(selected, ' selected')
 
         //for (const newListItem in newList) {
         //}
