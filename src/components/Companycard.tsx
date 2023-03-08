@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import Button from '@mui/material/Button';
+//import { Button } from '@material-ui/core';
+
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -26,14 +28,22 @@ type CompanycardProps = DataProps & AddItemBtn
 const Companycard:React.FC<CompanycardProps>= ({item , index, BtnOnClick}) => {
     
     const classes = useStyles();
-    const data = item as Data;
+
+    //const data = item as Data;s
+
  
     return (
         <div>
             <ul>
                 <li key={index} className={classes.search_result_wrapper}>
-                    <p className={classes.p_info}>{data.symbol}</p>
-                    <Button onClick={(e) => BtnOnClick(index, e)} size="large">ADD</Button>
+                    <p className={classes.p_info}>{item.name}</p>
+                    <p className={classes.p_info}>{item.symbol}</p>
+                    <Button 
+                        className={classes.add_btn} 
+                             onClick={(e) => BtnOnClick(index, e)}
+                                                size="large"
+                                                variant="contained"
+                                                >ADD</Button>
                 </li>
             </ul> 
         </div>
@@ -50,7 +60,12 @@ const useStyles = makeStyles({
     },
 
     p_info: {
+        flex:'1',
         marginRight: '2rem'
-    }
+    },
+
+    add_btn: {
+        marginRight:'2rem'
+      }
 
   });

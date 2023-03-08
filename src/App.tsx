@@ -11,6 +11,9 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import CompanyList from "./components/CompanyList";
 import CompanyPortfolio from "./components/CompanyPortfolio";
+//import { handleSearch } from './components/apisearchFunctions';
+
+
 
 type JsonData = {
   symbol: string;
@@ -25,13 +28,13 @@ const App: React.FC = () => {
   const [filteredData, setFilteredData] = useState<JsonData[]>([]);
   const [selectedItem, setSelectedItem] = useState(jsonData);
   const [updatedList, setUpdatedList] = useState({});
-  const [newListItems, setNewListItems] = useState<string[]>([]);
+  const [newListItems, setNewListItems] = useState<JsonData[]>([]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     setFilteredData(
       jsonData.filter((item) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()) || item.symbol.toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
   };
@@ -47,8 +50,7 @@ const App: React.FC = () => {
     }
     setSelectedItem([...selectedItem, selected]);
     setUpdatedList((prevState) => ({ ...prevState, updatedList: updatedList }));
-    setNewListItems([...newListItems, selected.symbol]); // add the new item to the list
-    const arr = { ...updatedList, newListItems };
+    setNewListItems([...newListItems, selected]); // add the new item to the list
   };
 
   useEffect(() => {
@@ -130,7 +132,7 @@ const useStyles = makeStyles({
 
   search_results_wrapper: {},
   search_results: {
-    height: "100px",
+    height: "500px",
     width: "500px",
     border: "solid 1px #3f50b5",
     borderRadius: "4.5px",
@@ -155,7 +157,7 @@ const useStyles = makeStyles({
     marginTop: "6rem",
     justifyContent: "center",
     alignItems: "center",
-    height: "100px",
+    height: "500px",
     width: "500px",
     border: "solid 1px #3f50b5",
     overflow: "auto",
