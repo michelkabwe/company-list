@@ -63,6 +63,8 @@ export default CompanyPortfolio;
 const useStyles = makeStyles({
   portfolio_wrapper: {
     display: "flex",
+    justifyContent:'center',
+    alignItems:'center',
     listStyleType: "none",
   },
 

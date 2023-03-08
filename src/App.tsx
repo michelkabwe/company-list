@@ -50,7 +50,8 @@ const App: React.FC = () => {
     }
     setSelectedItem([...selectedItem, selected]);
     setUpdatedList((prevState) => ({ ...prevState, updatedList: updatedList }));
-    setNewListItems([...newListItems, selected]); // add the new item to the list
+    setNewListItems([...newListItems, selected].sort((a,b) => a.name.localeCompare(b.name))); // add the new item to the list
+    //spread operator creates new array that includes the new selected, Sort() sorts the new array..passing a comparison function, that compares the name with localCompare(), that does a case sensesative comparison sorting alaphabetically ..Sorted value get sets to new value nelistitems..
   };
 
   useEffect(() => {
@@ -130,7 +131,10 @@ const useStyles = makeStyles({
     height: "100vh",
   },
 
-  search_results_wrapper: {},
+  search_results_wrapper: {
+
+  },
+
   search_results: {
     height: "500px",
     width: "500px",
