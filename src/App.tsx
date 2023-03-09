@@ -11,9 +11,8 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import CompanyList from "./components/CompanyList";
 import CompanyPortfolio from "./components/CompanyPortfolio";
-//import { handleSearch } from './components/apisearchFunctions';
-
-
+import { ThemeProvider } from '@mui/material';
+import { theme } from './Styles/Styles'
 
 type JsonData = {
   symbol: string;
@@ -71,22 +70,27 @@ const App: React.FC = () => {
   }, []);
 
   return (
+    <ThemeProvider theme={theme}>
+
     <StylesProvider>
       <div className="App">
         <Header />
         <Container className={classes.box_container}>
-          <Box className={classes.col}>
+          <Box className={classes.col_left}>
             <Box>
-              <TextField
+              <Box className={classes.search_results_wrapper}>
+           
+                <Typography variant="h6" className={classes.heading}>Search results </Typography>
+               
+                <Box className={classes.search_results}>
+                <TextField
                 className={classes.search_input}
                 label="Search..."
                 variant="outlined"
                 value={searchTerm}
                 onChange={handleSearch}
               />
-              <Box className={classes.search_results_wrapper}>
-                <Typography variant="h6">Search results </Typography>
-                <Box className={classes.search_results}>
+                  
                   <CompanyList
                     jsonData={jsonData}
                     filteredData={filteredData}
@@ -96,7 +100,7 @@ const App: React.FC = () => {
               </Box>
             </Box>
           </Box>
-          <Box className={classes.col}>
+          <Box className={classes.col_right}>
             <Box className={classes.search_results_wrapper}>
               <Typography variant="h6">Your Portfolio</Typography>
               <Box className={classes.search_container_portfolio}>
@@ -107,11 +111,12 @@ const App: React.FC = () => {
         </Container>
       </div>
     </StylesProvider>
+    </ThemeProvider>
   );
 };
 export default App;
 
-const useStyles = makeStyles({
+const useStyles = makeStyles( (theme) => ({
   header: {
     width: "100%",
     backgroundColor: "grey",
@@ -122,29 +127,63 @@ const useStyles = makeStyles({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
+    [theme.breakpoints.down('md')]:{
+      flexDirection:"column"
+    }
+    
+
   },
-  col: {
+  col_left: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
     height: "100vh",
+    padding:'2rem'
+  },
+
+  col_right: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100vh",
+    padding:'2rem',
+    [theme.breakpoints.down('md')]: {
+      display:'none'
+    }
+
   },
 
   search_results_wrapper: {
-
   },
+
+  /*search_wrapper: {
+    [theme.breakpoints.down('md')]: {
+      width:'75%',
+      margin:'auto'
+    }
+    
+  },*/
 
   search_results: {
     height: "500px",
-    width: "500px",
+    width: "100%",
     border: "solid 1px #3f50b5",
     borderRadius: "4.5px",
     overflow: "auto",
+    [theme.breakpoints.down('md')]: {
+      width: '75%',
+      margin: 'auto'
+    }
   },
   search_input: {
-    width: "100%",
-    margin: "20px 0",
+    display:'flex',
+    justifyContent:'center',
+    marginBottom:'2rem',
+    paddingRight:'2rem',
+    marginTop:'2rem',   
+    marginLeft:'2rem',
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
         borderColor: "#3f51b5",
@@ -155,10 +194,14 @@ const useStyles = makeStyles({
       "&.Mui-focused fieldset": {
         borderColor: "#3f51b5",
       },
+     //.MuiInputLabel-formControl
     },
+    [theme.breakpoints.down('md')]: {
+      textAlign: 'center'
+    }
+
   },
   search_container_portfolio: {
-    marginTop: "6rem",
     justifyContent: "center",
     alignItems: "center",
     height: "500px",
@@ -166,5 +209,15 @@ const useStyles = makeStyles({
     border: "solid 1px #3f50b5",
     overflow: "auto",
     borderRadius: "4.5px",
+    [theme.breakpoints.down('md')]:{
+      marginTop:'0rem'
+    },
+
   },
-});
+
+  heading: {
+    [theme.breakpoints.down('md')]: {
+      textAlign: 'center'
+    }
+  }
+}));
