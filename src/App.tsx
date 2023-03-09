@@ -11,8 +11,8 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import CompanyList from "./components/CompanyList";
 import CompanyPortfolio from "./components/CompanyPortfolio";
-import { ThemeProvider } from '@mui/material';
-import { theme } from './Styles/Styles'
+import { ThemeProvider } from "@mui/material";
+import { theme } from "./Styles/Styles";
 
 type JsonData = {
   symbol: string;
@@ -32,16 +32,15 @@ const App: React.FC = () => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     setFilteredData(
-      jsonData.filter((item) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase()) || item.symbol.toLowerCase().includes(searchTerm.toLowerCase())
+      jsonData.filter(
+        (item) =>
+          item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.symbol.toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
   };
 
-  const addItemToList = (
-    index: number,
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const addItemToList = (index: number, e: React.MouseEvent<SVGElement>) => {
     const selected = jsonData[index];
     if (!selected) {
       console.log(`Item at index ${index} not found in the data`);
@@ -49,8 +48,13 @@ const App: React.FC = () => {
     }
     setSelectedItem([...selectedItem, selected]);
     setUpdatedList((prevState) => ({ ...prevState, updatedList: updatedList }));
-    setNewListItems([...newListItems, selected].sort((a,b) => a.name.localeCompare(b.name))); // add the new item to the list
+    setNewListItems(
+      [...newListItems, selected].sort((a, b) => a.name.localeCompare(b.name))
+    ); // add the new item to the list
     //spread operator creates new array that includes the new selected, Sort() sorts the new array..passing a comparison function, that compares the name with localCompare(), that does a case sensesative comparison sorting alaphabetically ..Sorted value get sets to new value nelistitems..
+
+    //setCountedItems(newListItems.length + 1); // update the count of items in the array
+    //setCountedItems((prevCount) => prevCount + 1);
   };
 
   useEffect(() => {
@@ -71,52 +75,52 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <StylesProvider>
+        <div className="App">
+          <Header />
+          <Container className={classes.box_container}>
+            <Box className={classes.col_left}>
+              <Box>
+                <Box className={classes.search_results_wrapper}>
+                  <Typography variant="h6" className={classes.heading}>
+                    Search results{" "}
+                  </Typography>
 
-    <StylesProvider>
-      <div className="App">
-        <Header />
-        <Container className={classes.box_container}>
-          <Box className={classes.col_left}>
-            <Box>
-              <Box className={classes.search_results_wrapper}>
-           
-                <Typography variant="h6" className={classes.heading}>Search results </Typography>
-               
-                <Box className={classes.search_results}>
-                <TextField
-                className={classes.search_input}
-                label="Search..."
-                variant="outlined"
-                value={searchTerm}
-                onChange={handleSearch}
-              />
-                  
-                  <CompanyList
-                    jsonData={jsonData}
-                    filteredData={filteredData}
-                    handleClick={addItemToList}
-                  />
+                  <Box className={classes.search_results}>
+                    <TextField
+                      className={classes.search_input}
+                      label="Search..."
+                      variant="outlined"
+                      value={searchTerm}
+                      onChange={handleSearch}
+                    />
+
+                    <CompanyList
+                      jsonData={jsonData}
+                      filteredData={filteredData}
+                      handleClick={addItemToList}
+                    />
+                  </Box>
                 </Box>
               </Box>
             </Box>
-          </Box>
-          <Box className={classes.col_right}>
-            <Box className={classes.search_results_wrapper}>
-              <Typography variant="h6">Your Portfolio</Typography>
-              <Box className={classes.search_container_portfolio}>
-                <CompanyPortfolio newListItems={newListItems} />
+            <Box className={classes.col_right}>
+              <Box className={classes.search_results_wrapper}>
+                <Typography variant="h6">Your Portfolio</Typography>
+                <Box className={classes.search_container_portfolio}>
+                  <CompanyPortfolio newListItems={newListItems} />
+                </Box>
               </Box>
             </Box>
-          </Box>
-        </Container>
-      </div>
-    </StylesProvider>
+          </Container>
+        </div>
+      </StylesProvider>
     </ThemeProvider>
   );
 };
 export default App;
 
-const useStyles = makeStyles( (theme) => ({
+const useStyles = makeStyles((theme) => ({
   header: {
     width: "100%",
     backgroundColor: "grey",
@@ -127,11 +131,9 @@ const useStyles = makeStyles( (theme) => ({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    [theme.breakpoints.down('md')]:{
-      flexDirection:"column"
-    }
-    
-
+    [theme.breakpoints.down("md")]: {
+      flexDirection: "column",
+    },
   },
   col_left: {
     display: "flex",
@@ -139,7 +141,7 @@ const useStyles = makeStyles( (theme) => ({
     alignItems: "center",
     width: "100%",
     height: "100vh",
-    padding:'2rem'
+    padding: "2rem",
   },
 
   col_right: {
@@ -148,15 +150,13 @@ const useStyles = makeStyles( (theme) => ({
     alignItems: "center",
     width: "100%",
     height: "100vh",
-    padding:'2rem',
-    [theme.breakpoints.down('md')]: {
-      display:'none'
-    }
-
+    padding: "2rem",
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
   },
 
-  search_results_wrapper: {
-  },
+  search_results_wrapper: {},
 
   /*search_wrapper: {
     [theme.breakpoints.down('md')]: {
@@ -172,18 +172,18 @@ const useStyles = makeStyles( (theme) => ({
     border: "solid 1px #3f50b5",
     borderRadius: "4.5px",
     overflow: "auto",
-    [theme.breakpoints.down('md')]: {
-      width: '75%',
-      margin: 'auto'
-    }
+    [theme.breakpoints.down("md")]: {
+      width: "75%",
+      margin: "auto",
+    },
   },
   search_input: {
-    display:'flex',
-    justifyContent:'center',
-    marginBottom:'2rem',
-    paddingRight:'2rem',
-    marginTop:'2rem',   
-    marginLeft:'2rem',
+    display: "flex",
+    justifyContent: "center",
+    marginBottom: "2rem",
+    paddingRight: "2rem",
+    marginTop: "2rem",
+    marginLeft: "2rem",
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
         borderColor: "#3f51b5",
@@ -194,12 +194,11 @@ const useStyles = makeStyles( (theme) => ({
       "&.Mui-focused fieldset": {
         borderColor: "#3f51b5",
       },
-     //.MuiInputLabel-formControl
+      //.MuiInputLabel-formControl
     },
-    [theme.breakpoints.down('md')]: {
-      textAlign: 'center'
-    }
-
+    [theme.breakpoints.down("md")]: {
+      textAlign: "center",
+    },
   },
   search_container_portfolio: {
     justifyContent: "center",
@@ -209,15 +208,14 @@ const useStyles = makeStyles( (theme) => ({
     border: "solid 1px #3f50b5",
     overflow: "auto",
     borderRadius: "4.5px",
-    [theme.breakpoints.down('md')]:{
-      marginTop:'0rem'
+    [theme.breakpoints.down("md")]: {
+      marginTop: "0rem",
     },
-
   },
 
   heading: {
-    [theme.breakpoints.down('md')]: {
-      textAlign: 'center'
-    }
-  }
+    [theme.breakpoints.down("md")]: {
+      textAlign: "center",
+    },
+  },
 }));

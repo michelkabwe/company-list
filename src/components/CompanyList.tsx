@@ -12,7 +12,7 @@ type DataProps = {
 };
 
 type AddItemProps = {
-  handleClick: (index: number, e: React.MouseEvent<HTMLButtonElement>) => void;
+  handleClick: (index: number, e: React.MouseEvent<SVGElement>) => void;
 };
 
 type FilteredProps = {

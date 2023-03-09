@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 //import Button from '@mui/material/Button';
 import { Button } from "@material-ui/core";
-import { theme } from '../Styles/Styles'
+import { theme } from "../Styles/Styles";
 import { makeStyles } from "@material-ui/core/styles";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 
 interface DataProps {
   item: Data;
@@ -15,7 +16,7 @@ interface Data {
 }
 
 type AddItemBtn = {
-  BtnOnClick: (index: number, e: React.MouseEvent<HTMLButtonElement>) => void;
+  BtnOnClick: (index: number, e: React.MouseEvent<SVGElement>) => void;
 };
 
 type CompanycardProps = DataProps & AddItemBtn;
@@ -31,32 +32,30 @@ const Companycard: React.FC<CompanycardProps> = ({
 
   return (
     <div key={index} className={classes.card_results_wrapper}>
-          <div className={classes.text_container}>
-          <p className={classes.p_info}>{item.name}</p>
-          </div>
-          <div className={classes.text_container}>
-          <p className={classes.p_info}>{item.symbol}</p>
-          </div>
-        
-          <div className={classes.btn_wrapper}>
-          <Button
-            className={classes.add_btn}
-            onClick={(e) => BtnOnClick(index, e)}
-            size="small"
-            variant="contained"
-            color="primary"
-          >
-            ADD
-          </Button>
-          </div>
-   
+      <div className={classes.text_container}>
+        <p className={classes.p_info}>{item.name}</p>
+      </div>
+      <div className={classes.text_container}>
+        <p className={classes.p_info}>{item.symbol}</p>
+      </div>
+
+      <div className={classes.btn_wrapper}>
+        <AddBoxIcon
+          className={classes.add_btn}
+          onClick={(e: React.MouseEvent<SVGElement, MouseEvent>) =>
+            BtnOnClick(index, e)
+          }
+        >
+          ADD
+        </AddBoxIcon>
+      </div>
     </div>
   );
 };
 
 export default Companycard;
 
-const useStyles = makeStyles( (theme) => ({
+const useStyles = makeStyles((theme) => ({
   search_result_wrapper: {
     /*display: "flex",*/
   },
@@ -67,15 +66,13 @@ const useStyles = makeStyles( (theme) => ({
     alignItems: "center",
     paddingLeft: "2rem",
     flex: "1",
-    wordWrap:'break-word',
-    overflow:'auto',
-    fontSize:'0.8rem'
+    wordWrap: "break-word",
+    overflow: "auto",
+    fontSize: "0.8rem",
   },
 
-
-
   btn_wrapper: {
-    width:'25%',
+    width: "25%",
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
@@ -90,7 +87,7 @@ const useStyles = makeStyles( (theme) => ({
     marginRight: "2rem",
     width: "100%",
     height: "41px",
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down("md")]: {
       width: "25%",
       height: "32px",
     },
@@ -101,7 +98,5 @@ const useStyles = makeStyles( (theme) => ({
     justifyContent: "center",
     alignItems: "center",
     height: "100px",
-
-  }
- 
+  },
 }));
